@@ -34,7 +34,7 @@ app.add_middleware(
 
 def clean_answer(answer):
     cleaned = answer.strip()
-    if cleaned[-1] in {';', '.', '+'}:
+    if cleaned[-1] in {'+'}:
         cleaned = cleaned[:-1]
     if cleaned[0] == '~':
         cleaned = cleaned[1:]
