@@ -34,10 +34,9 @@ app.add_middleware(
 )
 
 def clean_answer(answer):
-    # Используем регулярное выражение для извлечения числовых значений и степеней
-    match = re.search(r'(\d+-\d+°С)', answer)
-    if match:
-        return match.group(1)
+    # Отбрасываем первые три символа и предпоследний символ
+    if len(answer) > 4:
+        answer = answer[3:-2]
     return answer.strip()
 
 def find_answers(quest, text):
