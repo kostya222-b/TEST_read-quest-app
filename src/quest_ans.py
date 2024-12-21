@@ -1,4 +1,5 @@
 import os
+import re
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -33,12 +34,11 @@ app.add_middleware(
 )
 
 def clean_answer(answer):
-    cleaned = answer.strip()
-    if cleaned[-1] in {'+'}:
-        cleaned = cleaned[:-1]
-    if cleaned[0] == '~':
-        cleaned = cleaned[1:]
-    return cleaned
+    # Используем регулярное выражение для извлечения числовых значений и степеней
+    match = re.search(r'(\d+-\d+°С)', answer)
+    if match:
+        return match.group(1)
+    return answer.strip()
 
 def find_answers(quest, text):
     true_answers_list = []
@@ -89,7 +89,7 @@ async def test(quest: str = None):
     new_true_answers_list = []
     for answer in true_answers_list:
         new_true_answers_list.append(answer.replace('а', 'a').replace('о', 'o'))
-        new_true_answers_list.append(answer.replace('a', 'а').replace('o', 'о'))
+        new_true_answers_list.append(answer.replace('a', 'а').replace('о', 'о'))
 
     return true_answers_list + new_true_answers_list
 
