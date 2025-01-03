@@ -4,6 +4,7 @@ import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
+
 tags_metadata = [
     {
         'name': 'SEARCH ANSWERS',
@@ -29,10 +30,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get('/test')
 async def test(
         quest: str = None
 ):
+    # quest = quest.replace('a', 'а')
+    # quest = quest.replace('o', 'о')
     this_folder = os.getcwd()
     beg_beg = 0
     if quest:
@@ -59,6 +63,8 @@ async def test(
                             cleaned_i = cleaned_i[0:-1] if cleaned_i[-1] == '.' else cleaned_i
                             cleaned_i = cleaned_i[1:] if cleaned_i[0] == '~' else cleaned_i
                             cleaned_i = cleaned_i[2:].strip()
+                            # cleaned_i = cleaned_i.replace('а', 'a')
+                            # cleaned_i = cleaned_i.replace('о', 'o')
                             true_answers_list.append(cleaned_i)
             else:
                 raise HTTPException(status_code=404, detail='Нет такого вопроса')
@@ -85,7 +91,10 @@ async def test(
                                 cleaned_i = cleaned_i[0:-1] if cleaned_i[-1] == '.' else cleaned_i
                                 cleaned_i = cleaned_i[1:] if cleaned_i[0] == '~' else cleaned_i
                                 cleaned_i = cleaned_i[2:].strip()
+                                # cleaned_i = cleaned_i.replace('а', 'a')
+                                # cleaned_i = cleaned_i.replace('о', 'o')
                                 true_answers_list.append(cleaned_i)
+                    # return true_answers_list
                 else:
                     raise HTTPException(status_code=404, detail='Нет такого вопроса')
 
@@ -111,7 +120,10 @@ async def test(
                                 cleaned_i = cleaned_i[0:-1] if cleaned_i[-1] == '.' else cleaned_i
                                 cleaned_i = cleaned_i[1:] if cleaned_i[0] == '~' else cleaned_i
                                 cleaned_i = cleaned_i[2:].strip()
+                                # cleaned_i = cleaned_i.replace('а', 'a')
+                                # cleaned_i = cleaned_i.replace('о', 'o')
                                 true_answers_list.append(cleaned_i)
+                    # return true_answers_list
                 else:
                     raise HTTPException(status_code=404, detail='Нет такого вопроса')
 
